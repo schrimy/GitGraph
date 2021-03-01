@@ -1,10 +1,13 @@
-import './App.css'
+import SearchBar from './screens/SearchBar'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div>
+      <header className="bg-secondary">
+        <SearchBar />
       </header>
+      <main>
+      </main>
     </div>
   )
 }
