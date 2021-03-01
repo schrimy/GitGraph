@@ -1,3 +1,6 @@
+//TODO: send data to store state
+//TODO: return fetch promise and in SearcBar handle .then's etc
+
 export const getGitData = (userName) => {
     //grab token from hidden env file
     const { REACT_APP_GIT_TOKEN } = process.env

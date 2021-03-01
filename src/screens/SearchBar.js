@@ -22,7 +22,11 @@ const SearchBar = () => {
                     autoFocus={ true }
                     value={ userName }
                     onChange={ (evt) => setUserName(evt.target.value)} />
-                <button type="submit" className="btn btn-dark">SUBMIT</button>
+                <button
+                    type="submit"
+                    className="btn btn-dark"
+                    disabled={ userName === '' }>
+                SUBMIT</button>
             </div>
         </form>
     )
