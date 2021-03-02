@@ -1,11 +1,10 @@
 //TODO: send data to store state
-//TODO: return fetch promise and in SearcBar handle .then's etc
 
 export const getGitData = (userName) => {
     //grab token from hidden env file
     const { REACT_APP_GIT_TOKEN } = process.env
     //fetch promise call to GitHub graphQL to get passed in user's calendar contributions
-    fetch('https://api.github.com/graphql', {
+    return fetch('https://api.github.com/graphql', {
         method: 'POST',
         body: JSON.stringify({
             query:
@@ -32,6 +31,8 @@ export const getGitData = (userName) => {
         }
     })
     .then(data => data.json())
-    .then(res => console.log(res))
+    .then(res => {
+        return Promise.resolve(res)
+    })
     .catch(err => console.log('error getting GitHub data', err))
 }
