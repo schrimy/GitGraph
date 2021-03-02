@@ -2,9 +2,11 @@ import React, {
     useState,
     useRef
 } from 'react'
-import { getGitData } from '../utils/helpers'
+import { connect } from 'react-redux'
+import { handleUserSubmit } from '../actions/shared'
 
-const SearchBar = () => {
+const SearchBar = (props) => {
+    const { handleUserSubmit } = props
     //hold and update the form username
     const [userName, setUserName] = useState('')
     //set ref for search input -> add error styling when error occurs
@@ -27,10 +29,9 @@ const SearchBar = () => {
     const handleSubmit = (evt) => {
         evt.preventDefault()
 
-        //call helper method which returns a promise, handle any errors from api response here
-        getGitData(userName)
+        //call thunk action which returns a promise, handle any errors from api response here
+        handleUserSubmit(userName)
         .then(res => {
-            console.log(res)
             res.errors !== undefined
                 ? showError()
                 : hideError()
@@ -63,4 +64,4 @@ const SearchBar = () => {
     )
 }
 
-export default SearchBar
+export default connect(null, { handleUserSubmit })(SearchBar)

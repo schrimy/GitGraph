@@ -1,4 +1,4 @@
-import SearchBar from './screens/SearchBar'
+import SearchBar from './containers/SearchBar'
 
 function App() {
   return (

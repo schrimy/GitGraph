@@ -1,5 +1,3 @@
-//TODO: send data to store state
-
 export const getGitData = (userName) => {
     //grab token from hidden env file
     const { REACT_APP_GIT_TOKEN } = process.env
@@ -30,9 +28,4 @@ export const getGitData = (userName) => {
             'Authorization': `Bearer ${REACT_APP_GIT_TOKEN}`
         }
     })
-    .then(data => data.json())
-    .then(res => {
-        return Promise.resolve(res)
-    })
-    .catch(err => console.log('error getting GitHub data', err))
 }
