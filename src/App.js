@@ -1,4 +1,5 @@
 import SearchBar from './containers/SearchBar'
+import DataView from './containers/DataView'
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
         <SearchBar />
       </header>
       <main>
+        <DataView />
       </main>
     </div>
   )
