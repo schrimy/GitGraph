@@ -18,18 +18,18 @@ import {
 
 const DataView = (props) => {
     let mount = useRef(null)
-    const { contributions } = props
-
-    //TODO: change width / height of camera perspective
     //three.js variables
-    const scene = new Scene()
+    let scene = useRef(null)
     const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
     const renderer = new WebGLRenderer()
+    const { contributions } = props
 
+    //TODO: in use Effect when contributions change delete / clear current refs / delete current webGL scene
     //useEffect to setup and render 3d scene when component mounted
     useEffect(() => {
         console.log('contributions:', contributions)
         if(contributions !== null) {
+            scene.current = new Scene()
             setScene(contributions)
         }
     })
@@ -47,7 +47,7 @@ const DataView = (props) => {
                 cube.position.z = y*2
                 cube.position.x += (i*2) - contribs.length
                 cube.position.y = 1 + (day.contributionCount / 2) / 2
-                scene.add(cube)
+                scene.current.add(cube)
             }
         }
 
@@ -55,7 +55,7 @@ const DataView = (props) => {
         camera.position.z = 20
         camera.position.y = 30
         camera.rotateX(-1)
-        renderer.render( scene, camera )
+        renderer.render( scene.current, camera )
 
         /*const animate = () => {
             requestAnimationFrame( animate )
