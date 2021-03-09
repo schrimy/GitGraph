@@ -38,18 +38,23 @@ const DataView = (props) => {
         renderer.setSize(window.innerWidth, window.innerHeight)
         mount.appendChild(renderer.domElement)
 
-        for(const [i, day] of contribs.entries()) {
-            console.log('add cube')
-            const geometry = new BoxGeometry(1, (1 + day.contributionCount/2), 1)
-            const material = new MeshBasicMaterial({ color: day.color })
-            const cube = new Mesh(geometry, material)
-            cube.position.x += (i*2) - contribs.length
-            cube.position.y = 1 + (day.contributionCount/2)/2
-            scene.add(cube)
+        //day cube creation
+        for(const [i, week] of contribs.entries()) {
+            for(const [y, day] of week.contributionDays.entries()) {
+                const geometry = new BoxGeometry(1, (1 + day.contributionCount / 2), 1)
+                const material = new MeshBasicMaterial({ color: day.color })
+                const cube = new Mesh(geometry, material)
+                cube.position.z = y*2
+                cube.position.x += (i*2) - contribs.length
+                cube.position.y = 1 + (day.contributionCount / 2) / 2
+                scene.add(cube)
+            }
         }
 
-        camera.position.z = 10
-        camera.position.y = 5
+        //camera pos
+        camera.position.z = 20
+        camera.position.y = 30
+        camera.rotateX(-1)
         renderer.render( scene, camera )
 
         /*const animate = () => {
@@ -64,6 +69,7 @@ const DataView = (props) => {
         animate()*/
     }
 
+    //ref set to allow to mount 3D scene in a component and not to root
     return (
         <div ref={ ref => (mount = ref) }></div>
     )
@@ -72,7 +78,7 @@ const DataView = (props) => {
 //for now just return first week of contributions, so not to break processing
 function mapStateToProps({ gitData }) {
     return {
-        contributions: gitData !== null ? gitData.weeks[0].contributionDays : null
+        contributions: gitData !== null ? gitData.weeks : null
     }
 }
 
