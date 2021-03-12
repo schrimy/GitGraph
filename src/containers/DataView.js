@@ -13,30 +13,42 @@ import {
 } from 'three'
 
 //example used: https://blog.bitsrc.io/starting-with-react-16-and-three-js-in-5-minutes-3079b8829817
-//TODO: remove scene etc on unMount
-//TODO: or / and stop new scene being rendered on new search results
-
 const DataView = (props) => {
     let mount = useRef(null)
     //three.js variables
-    let scene = useRef(null)
-    const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-    const renderer = new WebGLRenderer()
+    let camera = useRef(null)
+    let renderer = useRef(null)
     const { contributions } = props
 
-    //TODO: in use Effect when contributions change delete / clear current refs / delete current webGL scene
-    //useEffect to setup and render 3d scene when component mounted
+    //useEffect to set up the renderer and camera once only -> no duplication
+    useEffect(() => {
+        console.log('set up scene etc')
+        camera.current = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+        renderer.current = new WebGLRenderer()
+        renderer.current.autoClear = true;
+
+        renderer.current.setSize(window.innerWidth, window.innerHeight)
+        //create canvas element and attach renderer to it
+        mount.appendChild(renderer.current.domElement)
+
+        //camera pos
+        camera.current.position.z = 20
+        camera.current.position.y = 30
+        camera.current.rotateX(-1)
+    }, [])
+
+    //useEffect to create 3d objects for each day of a week when data is not null
     useEffect(() => {
         console.log('contributions:', contributions)
         if(contributions !== null) {
-            scene.current = new Scene()
             setScene(contributions)
         }
-    })
+    }, [contributions])
 
     const setScene = (contribs) => {
-        renderer.setSize(window.innerWidth, window.innerHeight)
-        mount.appendChild(renderer.domElement)
+        console.log('set scene')
+        const scene = new Scene()
+        renderer.current.clear()
 
         //day cube creation
         for(const [i, week] of contribs.entries()) {
@@ -47,15 +59,11 @@ const DataView = (props) => {
                 cube.position.z = y*2
                 cube.position.x += (i*2) - contribs.length
                 cube.position.y = 1 + (day.contributionCount / 2) / 2
-                scene.current.add(cube)
+                scene.add(cube)
             }
         }
 
-        //camera pos
-        camera.position.z = 20
-        camera.position.y = 30
-        camera.rotateX(-1)
-        renderer.render( scene.current, camera )
+        renderer.current.render( scene, camera.current )
 
         /*const animate = () => {
             requestAnimationFrame( animate )
