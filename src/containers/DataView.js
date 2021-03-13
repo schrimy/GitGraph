@@ -59,6 +59,7 @@ const DataView = (props) => {
                 cube.position.z = y*2
                 cube.position.x += (i*2) - contribs.length
                 cube.position.y = 1
+                //store end height in name param
                 cube.name = (1 + day.contributionCount / 2)
                 scene.add(cube)
             }
@@ -70,8 +71,11 @@ const DataView = (props) => {
 
             const changeScale = 45
 
+            //method to call the checks again
             requestAnimationFrame( animate )
     
+            //run through every object in scene, make sure it's a mesh and then see if it's at stored height in name
+            //if not then add a fraction of the height on and check again
             scene.traverse((obj) => {
                 if(obj.isMesh && obj.scale.y < obj.name) {
                     obj.scale.setY(obj.scale.y += (obj.name/changeScale))
