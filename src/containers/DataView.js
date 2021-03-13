@@ -25,7 +25,7 @@ const DataView = (props) => {
         console.log('set up scene etc')
         camera.current = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
         renderer.current = new WebGLRenderer()
-        renderer.current.autoClear = true;
+        //renderer.current.autoClear = true;
 
         renderer.current.setSize(window.innerWidth, window.innerHeight)
         //create canvas element and attach renderer to it
@@ -53,28 +53,36 @@ const DataView = (props) => {
         //day cube creation
         for(const [i, week] of contribs.entries()) {
             for(const [y, day] of week.contributionDays.entries()) {
-                const geometry = new BoxGeometry(1, (1 + day.contributionCount / 2), 1)
+                const geometry = new BoxGeometry(1, 1, 1)
                 const material = new MeshBasicMaterial({ color: day.color })
                 const cube = new Mesh(geometry, material)
                 cube.position.z = y*2
                 cube.position.x += (i*2) - contribs.length
-                cube.position.y = 1 + (day.contributionCount / 2) / 2
+                cube.position.y = 1
+                cube.name = (1 + day.contributionCount / 2)
                 scene.add(cube)
             }
         }
 
         renderer.current.render( scene, camera.current )
 
-        /*const animate = () => {
+        const animate = () => {
+
+            const changeScale = 45
+
             requestAnimationFrame( animate )
     
-            cube.rotation.x += 0.01
-            cube.rotation.y += 0.01
+            scene.traverse((obj) => {
+                if(obj.isMesh && obj.scale.y < obj.name) {
+                    obj.scale.setY(obj.scale.y += (obj.name/changeScale))
+                    obj.position.y += (obj.name/changeScale) /2
+                }
+            })
     
-            renderer.render( scene, camera )
+            renderer.current.render( scene, camera.current )
         }
 
-        animate()*/
+        animate()
     }
 
     //ref set to allow to mount 3D scene in a component and not to root
