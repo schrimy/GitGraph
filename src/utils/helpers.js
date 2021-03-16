@@ -8,6 +8,9 @@ export const getGitData = (userName) => {
             query:
                 `query {
                     user(login: "${userName}") {
+                        avatarUrl
+                        login
+                        name
                         contributionsCollection {
                             contributionCalendar {
                                 totalContributions
