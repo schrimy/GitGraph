@@ -3,7 +3,9 @@ import React, {
     useRef
 } from 'react'
 import { connect } from 'react-redux'
+
 import { handleUserSubmit } from '../actions/shared'
+import UserCard from './UserCard'
 
 const SearchBar = (props) => {
     const { handleUserSubmit } = props
@@ -39,28 +41,31 @@ const SearchBar = (props) => {
     }
 
     return (
-        <form className='container pt-2 pb-2' onSubmit={ handleSubmit } >
-            <div className='form-group d-flex mb-0'>
-                <input
-                    type='text'
-                    id='userInput'
-                    className='form-control'
-                    placeholder='Enter username'
-                    ref={ formText }
-                    autoFocus={ true }
-                    value={ userName }
-                    onChange={ (evt) => setUserName(evt.target.value)} />
-                <button
-                    type='submit'
-                    className='btn btn-dark'
-                    disabled={ userName === '' }>SUBMIT</button>
-            </div>
-            <label
-                htmlFor='userInput'
-                ref={ formLabel }
-                className='text-danger mb-0 pt-1 font-weight-bold'
-                hidden>* invalid, please try another username</label>
-        </form>
+        <div className='container d-flex flex-row pt-2 pb-2'>
+            <UserCard />
+            <form className='ml-2 flex-fill align-self-center' onSubmit={ handleSubmit } >
+                <div className='form-group d-flex mb-0'>
+                    <input
+                        type='text'
+                        id='userInput'
+                        className='form-control'
+                        placeholder='Enter username'
+                        ref={ formText }
+                        autoFocus={ true }
+                        value={ userName }
+                        onChange={ (evt) => setUserName(evt.target.value)} />
+                    <button
+                        type='submit'
+                        className='btn btn-dark'
+                        disabled={ userName === '' }>SUBMIT</button>
+                </div>
+                <label
+                    htmlFor='userInput'
+                    ref={ formLabel }
+                    className='text-danger mb-0 pt-1 font-weight-bold'
+                    hidden>* invalid, please try another username</label>
+            </form>
+        </div>
     )
 }
 

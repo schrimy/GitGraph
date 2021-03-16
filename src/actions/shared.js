@@ -17,6 +17,7 @@ export const handleUserSubmit = (userName) => {
                 dispatch(
                     receiveGitData(res.data.user.contributionsCollection.contributionCalendar)
                 )
+                //send user data from query to action -> reducer
                 dispatch(receieveUserData({
                     avatar: res.data.user.avatarUrl,
                     login: res.data.user.login,
