@@ -9,6 +9,7 @@ import middleware from './middleware'
 import 'jquery/dist/jquery.js'
 import 'bootstrap/js/dist/util.js'
 import 'bootstrap/dist/css/bootstrap.css'
+import './styles/main.scss'
 
 const store = createStore(reducer, middleware)
 

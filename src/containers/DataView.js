@@ -1,4 +1,5 @@
 import React, {
+    Fragment,
     useEffect,
     useRef
 } from 'react'
@@ -91,7 +92,9 @@ const DataView = (props) => {
 
     //ref set to allow to mount 3D scene in a component and not to root
     return (
-        <div ref={ ref => (mount = ref) }></div>
+        <Fragment>
+            <div ref={ ref => (mount = ref) }></div>
+        </Fragment>
     )
 }
 
