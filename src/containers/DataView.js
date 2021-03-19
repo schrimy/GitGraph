@@ -19,7 +19,7 @@ const DataView = (props) => {
     //three.js variables
     let camera = useRef(null)
     let renderer = useRef(null)
-    const { contributions } = props
+    const { contributions, totalContributions } = props
 
     //useEffect to set up the renderer and camera once only -> no duplication
     useEffect(() => {
@@ -93,6 +93,9 @@ const DataView = (props) => {
     //ref set to allow to mount 3D scene in a component and not to root
     return (
         <Fragment>
+            <div className='details-text position-fixed w-100'>
+                { totalContributions !== null &&(`${totalContributions} contributions`) }
+            </div>
             <div ref={ ref => (mount = ref) }></div>
         </Fragment>
     )
@@ -101,7 +104,8 @@ const DataView = (props) => {
 //for now just return first week of contributions, so not to break processing
 function mapStateToProps({ gitData }) {
     return {
-        contributions: gitData !== null ? gitData.weeks : null
+        contributions: gitData !== null ? gitData.weeks : null,
+        totalContributions: gitData !== null ? gitData.totalContributions : null
     }
 }
 
