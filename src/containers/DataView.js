@@ -13,6 +13,8 @@ import {
     Mesh
 } from 'three'
 
+//TODO: make scene etc responsive
+
 //example used: https://blog.bitsrc.io/starting-with-react-16-and-three-js-in-5-minutes-3079b8829817
 const DataView = (props) => {
     let mount = useRef(null)
@@ -28,7 +30,8 @@ const DataView = (props) => {
         renderer.current = new WebGLRenderer()
         //renderer.current.autoClear = true;
 
-        renderer.current.setSize(window.innerWidth, window.innerHeight)
+        //give canvas id so responsive width and height can be set in css
+        renderer.current.domElement.id = 'canvas-holder'
         //create canvas element and attach renderer to it
         mount.appendChild(renderer.current.domElement)
 
