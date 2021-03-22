@@ -47,7 +47,22 @@ const DataView = (props) => {
         if(contributions !== null) {
             setScene(contributions)
         }
+        // eslint-disable-next-line
     }, [contributions])
+
+    const resizeRendererToDisplaySize = (targetCanvas) => {
+        const width = targetCanvas.clientWidth
+        const height = targetCanvas.clientHeight
+        //check if current canvas width and height are same as required parent aspect, if not resize to stop distortion
+        const needResize = targetCanvas.width !== width || targetCanvas.height !== height
+
+        if(needResize) {
+            renderer.current.setSize(width, height, false)
+        }
+
+        //return result so camera aspect can be reset alongside canvas for correct view ratios
+        return needResize
+    }
 
     const setScene = (contribs) => {
         console.log('set scene')
@@ -72,8 +87,8 @@ const DataView = (props) => {
         renderer.current.render( scene, camera.current )
 
         const animate = () => {
-
             const changeScale = 45
+            const canvas = renderer.current.domElement
 
             //method to call the checks again
             requestAnimationFrame( animate )
@@ -87,6 +102,12 @@ const DataView = (props) => {
                 }
             })
     
+            //update canvas aspect to stop strectching when screen size changes, if the canvas aspect needs changing too
+            if(resizeRendererToDisplaySize(canvas)) {
+                camera.current.aspect = canvas.clientWidth / canvas.clientHeight
+                camera.current.updateProjectionMatrix()
+            }
+
             renderer.current.render( scene, camera.current )
         }
 
