@@ -41,9 +41,9 @@ const SearchBar = (props) => {
     }
 
     return (
-        <div className='container d-flex flex-row pt-2 pb-2'>
+        <div className='container d-sm-flex flex-row pt-2 pb-2'>
             <UserCard />
-            <form className='ml-2 flex-fill align-self-center' onSubmit={ handleSubmit } >
+            <form className='ml-sm-2 mt-2 mt-sm-0 flex-fill align-self-center' onSubmit={ handleSubmit } >
                 <div className='form-group d-flex mb-0'>
                     <input
                         type='text'
