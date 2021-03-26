@@ -117,7 +117,7 @@ const DataView = (props) => {
     //ref set to allow to mount 3D scene in a component and not to root
     return (
         <Fragment>
-            <div className='details-text position-fixed w-100'>
+            <div className='details-text position-absolute w-100'>
                 { totalContributions !== null &&(`${totalContributions} contributions`) }
             </div>
             <div ref={ ref => (mount = ref) }></div>
