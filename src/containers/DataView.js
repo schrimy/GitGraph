@@ -12,8 +12,7 @@ import {
     MeshBasicMaterial,
     Mesh
 } from 'three'
-
-//TODO: make scene etc responsive
+import { createControls } from '../system/controls'
 
 //example used: https://blog.bitsrc.io/starting-with-react-16-and-three-js-in-5-minutes-3079b8829817
 const DataView = (props) => {
@@ -21,6 +20,7 @@ const DataView = (props) => {
     //three.js variables
     let camera = useRef(null)
     let renderer = useRef(null)
+    let controls = useRef(null)
     const { contributions, totalContributions } = props
 
     //useEffect to set up the renderer and camera once only -> no duplication
@@ -34,6 +34,8 @@ const DataView = (props) => {
         renderer.current.domElement.id = 'canvas-holder'
         //create canvas element and attach renderer to it
         mount.appendChild(renderer.current.domElement)
+        //attach mouse controls to middle of the scene to allow zoom and rotate
+        controls.current = createControls(camera.current, renderer.current.domElement)
 
         //camera pos
         camera.current.position.z = 20
