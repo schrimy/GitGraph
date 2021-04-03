@@ -1,11 +1,13 @@
 import React, {
     useState,
-    useRef
+    useRef,
+    useEffect
 } from 'react'
 import { connect } from 'react-redux'
 
 import { handleUserSubmit } from '../actions/shared'
 import UserCard from './UserCard'
+import { LAST_SEARCHED } from '../utils/constants'
 
 const SearchBar = (props) => {
     const { handleUserSubmit } = props
@@ -15,6 +17,16 @@ const SearchBar = (props) => {
     const formText = useRef('')
     const formLabel = useRef(true)
 
+    //check local storage, if not null -> search held name and set local userName state
+    useEffect(() => {
+        const savedUser = localStorage.getItem(LAST_SEARCHED)
+
+        if(savedUser !== null) {
+            handleUserSubmit(savedUser)
+            setUserName(savedUser)
+        }
+    }, [handleUserSubmit])
+
     //when called it applies red error styling to input and shows accessible label
     const showError = () => {
         formText.current.classList.add('is-invalid', 'text-danger')
@@ -23,6 +35,9 @@ const SearchBar = (props) => {
 
     //when called it removes red error styling to input and hides accessible label
     const hideError = () => {
+        //save error free search username in local storage
+        localStorage.setItem(LAST_SEARCHED, userName)
+
         formText.current.classList.remove('is-invalid', 'text-danger')
         formLabel.current.hidden = true
     }
