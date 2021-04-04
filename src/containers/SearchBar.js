@@ -63,7 +63,7 @@ const SearchBar = (props) => {
                     <input
                         type='text'
                         id='userInput'
-                        className='form-control'
+                        className='form-control bg-light'
                         placeholder='Enter username'
                         ref={ formText }
                         autoFocus={ true }

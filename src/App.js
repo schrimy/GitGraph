@@ -4,7 +4,7 @@ import DataView from './containers/DataView'
 function App() {
   return (
     <div>
-      <header className='bg-secondary'>
+      <header className='bg-white'>
         <SearchBar />
       </header>
       <main>

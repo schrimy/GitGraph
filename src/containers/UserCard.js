@@ -8,7 +8,7 @@ const UserCard = (props) => {
         userInfo !== null &&(
             <div className='d-inline-flex align-items-center'>
                 <img className='rounded-circle mr-1 avatar' src={userInfo.avatar} alt="user's avatar from GitHub" />
-                <div className='d-flex flex-column'>
+                <div className='d-flex flex-column user-card-text'>
                     <em>{userInfo.name}</em>
                     <strong>{userInfo.login}</strong>
                 </div>
