@@ -21,7 +21,7 @@ const DataView = (props) => {
     let camera = useRef(null)
     let renderer = useRef(null)
     let controls = useRef(null)
-    const { contributions, totalContributions } = props
+    const { contributions, totalContributions, dateSpan } = props
 
     //useEffect to set up the renderer and camera once only -> no duplication
     useEffect(() => {
@@ -116,11 +116,18 @@ const DataView = (props) => {
         animate()
     }
 
+    //TODO: format text into correct date format and label
+
     //ref set to allow to mount 3D scene in a component and not to root
     return (
         <Fragment>
-            <div className='details-text position-absolute w-100'>
-                { totalContributions !== null &&(`${totalContributions} contributions`) }
+            <div className='details-text d-flex flex-column position-absolute w-100'>
+                { totalContributions !== null &&(
+                    <Fragment>
+                        {totalContributions} contributions
+                        <span>({dateSpan})</span>
+                    </Fragment>)
+                }
             </div>
             <div ref={ ref => (mount = ref) }></div>
         </Fragment>
@@ -131,7 +138,8 @@ const DataView = (props) => {
 function mapStateToProps({ gitData }) {
     return {
         contributions: gitData !== null ? gitData.weeks : null,
-        totalContributions: gitData !== null ? gitData.totalContributions : null
+        totalContributions: gitData !== null ? gitData.totalContributions : null,
+        dateSpan: gitData !== null ? `${gitData.weeks[0].contributionDays[0].date} - ${gitData.weeks[gitData.weeks.length - 1].contributionDays[gitData.weeks[gitData.weeks.length - 1].contributionDays.length - 1].date}` : null
     }
 }
 

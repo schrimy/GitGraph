@@ -19,12 +19,24 @@
     text-align: center;
     overflow-y: hidden;
 
+    span {
+        font-size: 0.4em;
+    }
+
     @include media-breakpoint-up(md) {
         font-size: 5em;
+
+        span {
+            font-size: 0.3em;
+        }
     }
 
     @include media-breakpoint-up(lg) {
         font-size: 6em;
+
+        span {
+            font-size: 0.2em;
+        }
     }
 }
 
