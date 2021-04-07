@@ -1,3 +1,4 @@
+import { isEmptyObject } from 'jquery'
 import React, {
     Fragment,
     useEffect,
@@ -46,7 +47,7 @@ const DataView = (props) => {
     //useEffect to create 3d objects for each day of a week when data is not null
     useEffect(() => {
         console.log('contributions:', contributions)
-        if(contributions !== null) {
+        if(contributions !== null && contributions !== undefined) {
             setScene(contributions)
         }
         // eslint-disable-next-line
@@ -122,10 +123,10 @@ const DataView = (props) => {
     return (
         <Fragment>
             <div className='details-text d-flex flex-column position-absolute w-100'>
-                { totalContributions !== null &&(
+                { (totalContributions !== null && totalContributions !== undefined) &&(
                     <Fragment>
-                        {totalContributions} contributions
-                        <span>({dateSpan})</span>
+                        { totalContributions } contributions
+                        <span>( { dateSpan } )</span>
                     </Fragment>)
                 }
             </div>
@@ -136,10 +137,18 @@ const DataView = (props) => {
 
 //for now just return first week of contributions, so not to break processing
 function mapStateToProps({ gitData }) {
-    return {
-        contributions: gitData !== null ? gitData.weeks : null,
-        totalContributions: gitData !== null ? gitData.totalContributions : null,
-        dateSpan: gitData !== null ? `${gitData.weeks[0].contributionDays[0].date} - ${gitData.weeks[gitData.weeks.length - 1].contributionDays[gitData.weeks[gitData.weeks.length - 1].contributionDays.length - 1].date}` : null
+    if(!isEmptyObject(gitData)) {
+        const startDate = new Date(gitData.weeks[0].contributionDays[0].date).toLocaleDateString('en-GB')
+        const endDate = new Date(gitData.weeks[gitData.weeks.length - 1].contributionDays[gitData.weeks[gitData.weeks.length - 1].contributionDays.length - 1].date).toLocaleDateString('en-GB')
+        console.log('dates: ', endDate)
+
+        return {
+            contributions: gitData.weeks,
+            totalContributions: gitData.totalContributions,
+            dateSpan: `${startDate} - ${endDate}`
+        }
+    } else {
+        return gitData
     }
 }
 

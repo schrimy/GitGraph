@@ -1,6 +1,6 @@
 import { RECEIVE_GIT_DATA } from '../utils/constants'
 
-const gitData = (state = null, action) => {
+const gitData = (state = {}, action) => {
     switch (action.type) {
         case RECEIVE_GIT_DATA:
             return {
