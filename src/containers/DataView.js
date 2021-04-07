@@ -35,13 +35,14 @@ const DataView = (props) => {
         renderer.current.domElement.id = 'canvas-holder'
         //create canvas element and attach renderer to it
         mount.appendChild(renderer.current.domElement)
-        //attach mouse controls to middle of the scene to allow zoom and rotate
-        controls.current = createControls(camera.current, renderer.current.domElement)
 
         //camera pos
-        camera.current.position.z = 20
+        camera.current.position.z = 35
         camera.current.position.y = 30
         camera.current.rotateX(-1)
+
+        //attach mouse controls to middle of the scene to allow zoom and rotate
+        controls.current = createControls(camera.current, renderer.current.domElement)
     }, [])
 
     //useEffect to create 3d objects for each day of a week when data is not null
