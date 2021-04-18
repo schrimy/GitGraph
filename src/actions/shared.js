@@ -11,7 +11,6 @@ export const handleUserSubmit = (userName) => {
         return getGitData(userName)
         .then(data => data.json())
         .then(res => {
-            console.log('handleUserSubmit:', res)
             //make sure no errors in returned response, here they are stored in a param rather than being thrown and forcing error
             if(res.errors === undefined) {
                 dispatch(

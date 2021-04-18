@@ -26,7 +26,6 @@ const DataView = (props) => {
 
     //useEffect to set up the renderer and camera once only -> no duplication
     useEffect(() => {
-        console.log('set up scene etc')
         camera.current = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
         renderer.current = new WebGLRenderer()
         //renderer.current.autoClear = true;
@@ -47,7 +46,6 @@ const DataView = (props) => {
 
     //useEffect to create 3d objects for each day of a week when data is not null
     useEffect(() => {
-        console.log('contributions:', contributions)
         if(contributions !== null && contributions !== undefined) {
             setScene(contributions)
         }
@@ -69,7 +67,6 @@ const DataView = (props) => {
     }
 
     const setScene = (contribs) => {
-        console.log('set scene')
         const scene = new Scene()
         renderer.current.clear()
 
@@ -118,8 +115,6 @@ const DataView = (props) => {
         animate()
     }
 
-    //TODO: format text into correct date format and label
-
     //ref set to allow to mount 3D scene in a component and not to root
     return (
         <Fragment>
@@ -141,7 +136,6 @@ function mapStateToProps({ gitData }) {
     if(!isEmptyObject(gitData)) {
         const startDate = new Date(gitData.weeks[0].contributionDays[0].date).toLocaleDateString('en-GB')
         const endDate = new Date(gitData.weeks[gitData.weeks.length - 1].contributionDays[gitData.weeks[gitData.weeks.length - 1].contributionDays.length - 1].date).toLocaleDateString('en-GB')
-        console.log('dates: ', endDate)
 
         return {
             contributions: gitData.weeks,
